@@ -83,10 +83,7 @@ gg <- caricom_tidycovid19 %>%
   geom_hline(yintercept = log(2)/c(2:7,14,21), col='grey') +
   geom_smooth(method = "loess", se = FALSE) +
   labs(x = "Date",
-       y = "Confirmed Cases",
-       title = "Daily Increase in Cumulative Cases among Top 6 Worst Affected CARICOM Member States",
-       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
-       Prepared by: Yohance Nicholas") +
+       y = "Confirmed Cases") +
   ggthemes::scale_color_colorblind()
 ggplotly(gg)
 ```
@@ -454,6 +451,7 @@ With a view to map the spread of the disease thus far, I have elected to use two
 
 A number of specialised data cleaning scripts were prepared to garner current data on a range of issues. These scripts can be found in the [GitHub repository](https://yohance-nicholas.github.io/Developing-Data-Products/) created to store the content and code generated in the completion of this course.
 
-Developer
-Yohance Nicholas Consultant Economist at [Kairi Consultants Limited](https://www.kairi.com) [LinkedIn](https://www.linkedin.com/in/yohance-nicholas/) | [GitHub](https://yohance-nicholas.github.io/Developing-Data-Products/)
+**Developer**
+
+Yohance Nicholas | Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com) | [LinkedIn](https://www.linkedin.com/in/yohance-nicholas/) | [GitHub](https://yohance-nicholas.github.io/Developing-Data-Products/)
 
