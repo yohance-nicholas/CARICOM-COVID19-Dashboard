@@ -1,7 +1,6 @@
 ---
-title: 'Analysing the COVID-19 pandemic among CARICOM Member States'
+title: 'CARICOM COVID-19 Dashboard'
 author: "Yohance Nicholas"
-date: "May 15th 2020"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
