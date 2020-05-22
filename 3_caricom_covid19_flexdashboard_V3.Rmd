@@ -96,57 +96,51 @@ Column
 ### Box-plot Comparison of Confirmed Cases per 100k by Income Group
 ```{r}
 library(ggplot2)
-confirmed_boxplot <- ggplot(caricom_covid_regression_data, 
+confirmed_boxplot <- ggplot(world_covid_regression_data, 
                      aes(x=factor(income), 
                          y=confirmed_per_100k)) +
   geom_boxplot() + 
-  labs(title= "Box-plot Comparison of Confirmed Cases per 100k by Income Group", 
-       y="Confirmed Cases per 100k", 
-       x="Income Group (0 = Low Income, 1 = Upper Middle Income, 2 = High Income)")
+  labs(y="Confirmed Cases per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
 ggplotly(confirmed_boxplot)
 ```
 
 ### Box-plot Comparison of Confirmed Deaths per 100k by Income Group
 ```{r}
 library(ggplot2)
-deaths_boxplot <- ggplot(caricom_covid_regression_data, 
+deaths_boxplot <- ggplot(world_covid_regression_data, 
                      aes(x=factor(income), 
                          y=deaths_per_100k)) +
   geom_boxplot() + 
-  labs(title= "Box-plot Comparison of Confirmed Cases per 100k by Income Group", 
-       y="Deaths per 100k", 
-       x="Income Group (0 = Low Income, 1 = Upper Middle Income, 2 = High Income)")
+  labs(y="Deaths per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
 ggplotly(deaths_boxplot)
 ```
 
 Column 
 -------------------------------------
 
-### Relationship Between Confirmed Cases per 100k and Population Aged 65 +
+### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 +
 ```{r}
-regression_bi_ggplot <- caricom_today %>%
-  ggplot(aes(pop_65_over_2018, confirmed_per_100k)) +
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(confirmed_per_100k))) +
   geom_point() + 
   stat_smooth(method = "lm") + 
   labs(x = "Population Aged 65+",
-       y = "Confirmed Cases per 100,000 Persons",
-       title = "Relationship between Confirmed Cases per 100,000 and Population Aged 65+",
-       subtitle = "There exists a positive relationship between Confirmed Cases per 100K and Population Over the Age of 65")
+       y = "Confirmed Cases per 100,000 Persons (Log Scale)")
 library(plotly)
 ggplotly(regression_bi_ggplot)
 ```
 
-### Relationship Between Confirmed Cases per 100k and Prevalence of Diabetes among persons aged 20-79
+### Relationship Between Confirmed Deaths per 100k (Log Scale) and Population Aged 65 +
 
 ```{r}
-regression_bi_ggplot <- caricom_today %>%
-  ggplot(aes(pop_65_over_2018, deaths_per_100k)) +
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(deaths_per_100k))) +
   geom_point() + 
   stat_smooth(method = "lm") + 
   labs(x = "Population Aged 65+",
-       y = "Deaths per 100,000 Persons",
-       title = "Relationship between Confirmed Cases per 100,000 and Population Aged 65+",
-       subtitle = "There exists a positive relationship between Confirmed Cases per 100K and Population Over the Age of 65")
+       y = "Deaths per 100,000 Persons (Log Scale)")
 library(plotly)
 ggplotly(regression_bi_ggplot)
 ```
