@@ -1,0 +1,450 @@
+---
+title: 'CARICOM COVID-19 Dashboard'
+author: "Yohance Nicholas"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+Overview
+=====================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Spatial Distribution of COVID-19
+
+```{r}
+source("https://git.io/Jfqjv", local = T)
+library(leaflet)
+library(leaflet.extras)
+caricom_covid_map <- leaflet() %>% 
+  addProviderTiles(providers$CartoDB.VoyagerLabelsUnder) %>% 
+  addMarkers(lat = caricom_today$lat, 
+             lng = caricom_today$lng,
+             popupOptions = markerClusterOptions,
+             popup = paste("<b>", caricom_today$country, "</b> <br>",
+                           "Date: ", caricom_today$date, "<br>",
+                           "Confirmed Cases: ", caricom_today$confirmed, "<br>",
+                           "Deaths:", caricom_today$deaths,"<br>",
+                           "Recovered", caricom_today$recovered,"<br>",
+                           "Income Group:", caricom_today$income, "<br>",
+                           "Population Aged 65+:", caricom_today$pop_65_over_2018,"<br>",
+                           "Diabetes prev. (% pop 20-79):", caricom_today$diabetes_20_79)) %>% 
+  addCircleMarkers(lat = caricom_today$lat, 
+                   lng = caricom_today$lng,
+                   weight = 1,
+                   radius = caricom_today$confirmed_per_100k,
+                   color = 'yellow') %>% 
+  addCircleMarkers(lat = caricom_today$lat, 
+                   lng = caricom_today$lng,
+                   weight = 1,
+                   radius = caricom_today$deaths_per_100k,
+                   color = 'red') %>%
+  addLegend("bottomright", 
+            colors= c('red', 'yellow'), 
+            labels= c('Deaths per 100,000', 'Confirmed Cases per 100,000'), 
+            title="Legend") 
+caricom_covid_map 
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Confirmed Cases among CARICOM Member States 
+
+```{r}
+library(plotly)
+caricom_cumulative <- caricom_tidycovid19 %>% 
+  filter(date >= as.Date("2020-03-07")) %>% 
+  ggplot(aes(x=date, y=confirmed, fill = country)) +
+  geom_area() +
+  labs(x = "Date",
+       y = "Confirmed Cases",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+ggplotly(caricom_cumulative)
+```
+
+### Daily Increase in Cumulative Cases among 6 Worst Affected CARICOM Member States
+
+```{r}
+gg <- caricom_tidycovid19 %>%
+  mutate(cases_logratio = difference(log(confirmed))) %>%
+  filter(iso3c %in% top_6) %>%
+  filter(date >= as.Date("2020-03-15")) %>%
+  ggplot(aes(x = date, y = cases_logratio, col = country)) +
+  geom_hline(yintercept = log(2)/c(2:7,14,21), col='grey') +
+  geom_smooth(method = "loess", se = FALSE) +
+  labs(x = "Date",
+       y = "Confirmed Cases") +
+  ggthemes::scale_color_colorblind()
+ggplotly(gg)
+```
+
+Explore Relationships
+=====================================
+
+Column 
+-------------------------------------
+
+### Box-plot Comparison of Confirmed Cases per 100k by Income Group
+```{r}
+library(ggplot2)
+confirmed_boxplot <- ggplot(world_covid_regression_data, 
+                     aes(x=factor(income), 
+                         y=confirmed_per_100k)) +
+  geom_boxplot() + 
+  labs(y="Confirmed Cases per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
+ggplotly(confirmed_boxplot)
+```
+
+### Box-plot Comparison of Confirmed Deaths per 100k by Income Group
+```{r}
+library(ggplot2)
+deaths_boxplot <- ggplot(world_covid_regression_data, 
+                     aes(x=factor(income), 
+                         y=deaths_per_100k)) +
+  geom_boxplot() + 
+  labs(y="Deaths per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
+ggplotly(deaths_boxplot)
+```
+
+Column 
+-------------------------------------
+
+### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 +
+```{r}
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(confirmed_per_100k))) +
+  geom_point() + 
+  stat_smooth(method = "lm") + 
+  labs(x = "Population Aged 65+",
+       y = "Confirmed Cases per 100,000 Persons (Log Scale)")
+library(plotly)
+ggplotly(regression_bi_ggplot)
+```
+
+### Relationship Between Confirmed Deaths per 100k (Log Scale) and Population Aged 65 +
+
+```{r}
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(deaths_per_100k))) +
+  geom_point() + 
+  stat_smooth(method = "lm") + 
+  labs(x = "Population Aged 65+",
+       y = "Deaths per 100,000 Persons (Log Scale)")
+library(plotly)
+ggplotly(regression_bi_ggplot)
+```
+
+Confirmed
+=====================================
+
+Column {data-width=650}
+-------------------------------------
+
+### Share of Confirmed Cases across CARICOM Member States
+```{r}
+library(plotly)
+confirmed_pie <- plot_ly(caricom_today, labels = ~country, values = ~confirmed, type = 'pie')
+confirmed_pie
+```
+
+Column {.tabset .tabset-fade}
+-------------------------------------
+
+### Per 100,000 in Commodity Based Countries
+
+```{r}
+confirmed_per_100k_commodity <- caricom_tidycovid19 %>%
+  filter(economy == "Commodity Based",
+         date >= as.Date("2020-03-07")) %>%
+  ggplot(aes(x = date, y = confirmed_per_100k, col = country)) +
+  geom_line() +
+  labs(x = "Date",
+       y = "Confirmed Cases per 100,000 Persons",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(confirmed_per_100k_commodity)
+```
+
+### Per 100,000 in Service Based Countries
+
+```{r}
+confirmed_per_100k_service <- caricom_tidycovid19 %>%
+  filter(economy == "Service Based",
+         date >= as.Date("2020-03-07")) %>%
+  ggplot(aes(x = date, y = confirmed_per_100k, col = country)) +
+  geom_line() +
+  labs(x = "Date",
+       y = "Confirmed Cases per 100,000 Persons",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(confirmed_per_100k_service)
+```
+
+### Per 100,000 in OECS Member State
+
+```{r}
+confirmed_per_100k_oecs <- caricom_tidycovid19 %>%
+  filter(oecs == "OECS Member State",
+         date >= as.Date("2020-03-07")) %>%
+  ggplot(aes(x = date, y = confirmed_per_100k, col = country)) +
+  geom_line() +
+  labs(x = "Date",
+       y = "Confirmed Cases per 100,000 Persons",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(confirmed_per_100k_oecs)
+```
+
+Deaths
+=====================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Share of Confirmed Cases across CARICOM Member States
+```{r}
+library(plotly)
+deaths_pie <-  plot_ly(caricom_today, labels = ~country, values = ~deaths, type = 'pie')
+deaths_pie
+```
+
+Column {.tabset .tabset-fade}
+-------------------------------------
+
+### Per 100,000 among Commodity Based Countries
+
+```{r}
+deaths_commodity <- caricom_tidycovid19 %>%
+  filter(economy == "Commodity Based",
+         date >= as.Date("2020-03-07")) %>%
+  ggplot(aes(x = date, y = deaths_per_100k, col = country)) +
+  geom_line() +
+  labs(x = "Date",
+       y = "Confirmed Deaths per 100,000 Persons",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(deaths_commodity)
+```
+
+
+### er 100,000 among Service Based Countries
+
+```{r}
+deaths_services <-caricom_tidycovid19 %>%
+    filter(economy == "Service Based",
+           date >= as.Date("2020-03-07")
+    ) %>%
+    ggplot(aes(x = date, y = deaths_per_100k, col = country)) +
+    geom_line() +
+  labs(x = "Date",
+       y = "Confirmed Deaths per 100,000 Persons",
+       title = "Confirmed COVID-19 Cases among Service Based Economies",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(deaths_services)
+```
+
+### Share of Recoveries across CARICOM Member States
+```{r}
+library(plotly)
+recovered_pie <-  plot_ly(caricom_today, labels = ~country, values = ~recovered, type = 'pie')
+recovered_pie
+```
+
+Recoveries
+=====================================
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Share of Confirmed Cases across CARICOM Member States
+```{r}
+library(plotly)
+recoveries_pie <-  plot_ly(caricom_today, labels = ~country, values = ~recovered, type = 'pie')
+recoveries_pie
+```
+
+Column {.tabset .tabset-fade}
+-------------------------------------
+
+### Commodity Based Countries
+
+```{r}
+recovered_commodity <- caricom_tidycovid19 %>%
+  filter(economy == "Commodity Based",
+         date >= as.Date("2020-03-07")) %>%
+  ggplot(aes(x = date, y = recovered, col = country)) +
+  geom_line() +
+  labs(x = "Date",
+       y = "Recoveries",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(recovered_commodity)
+```
+
+
+### Service Based Countries
+
+```{r}
+recovered_services <-caricom_tidycovid19 %>%
+    filter(economy == "Service Based",
+           date >= as.Date("2020-03-07")
+    ) %>%
+    ggplot(aes(x = date, y = recovered, col = country)) +
+    geom_line() +
+  labs(x = "Date",
+       y = "Recoveries",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(recovered_services)
+```
+
+### OECS Member States
+
+```{r}
+recovered_oecs <-caricom_tidycovid19 %>%
+    filter(oecs == "OECS Member State",
+           economy == "Service Based",
+           date >= as.Date("2020-03-07")
+    ) %>%
+    ggplot(aes(x = date, y = recovered, col = country)) +
+    geom_line() +
+  labs(x = "Date",
+       y = "Recoveries",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
+library(plotly)
+ggplotly(recovered_oecs)
+```
+
+Impact of Restrictions
+=====================================
+
+Row {.tabset .tabset-fade}
+-------------------------------------
+
+### Residential
+
+```{r}
+residential_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_residential , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  ggtitle("Mobility Changes around Residential among 6 Worst Affected CARICOM Member States") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Residential among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(residential_facet)
+```
+
+### Recreational Areas
+
+```{r}
+recreation_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_retail_recreation , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Recreational Areas among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(recreation_facet)
+```
+
+### Workplaces
+
+```{r}
+workplaces_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01"),
+         date <= as.Date("2020-04-26")) %>%
+  ggplot(aes(x = date, y = gcmr_workplaces , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  ggtitle("Mobility Changes around Workplaces among 6 Worst Affected CARICOM Member States") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = " Mobility Changes to Workplaces among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(workplaces_facet)
+```
+
+### Public Parks 
+
+```{r}
+parks_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01"),
+         date <= as.Date("2020-04-26")) %>%
+  ggplot(aes(x = date, y = gcmr_parks , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Public Parks among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(parks_facet)
+```
+
+About
+=====================================
+
+**Overview**
+
+This Dashboard was created in partial fulfilment of the [Developing Data Products Course](https://www.coursera.org/learn/data-products/home/welcome) which comprises one of the five courses necessary for the Data Science: Statistics and Machine Learning Specialization offered by Johns Hopikins University through Coursera. This assignment challenged candidates to Create a data product and a reproducible pitch. Once completed, candidates were required to host their webpage on either GitHub Pages, RPubs, or NeoCities. The webpage presentation must contain the date that you created the document, and it must contain a plot created with Plotly.All other coursework projects completed as part of this course can be found at my [GitHub repository](https://yohance-nicholas.github.io/Developing-Data-Products/) for this course.
+
+**Rationale**
+
+The Coronavirus disease 2019 (COVID-19) is an infectious disease caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). The disease was first identified in December 2019 in Wuhan, the capital of China's Hubei province, and has since spread globally, resulting in the ongoing 2019–20 coronavirus pandemic. For this coursework project, I have opted to use Plotly to illustrate the spread of the Novel Coronavirus across [CARICOM Member States](https://caricom.org/member-states-and-associate-members/). All CARICOM countries are classified as developing countries. They are all relatively small in terms of population and size, and diverse in terms of geography and population, culture and levels of economic and social development.  While the pandemic was slow to reach the CARICOM region, the begining of March saw the onset of the pandemic among CARICOM member states. 
+
+**Data Sources**
+
+With a view to map the spread of the disease thus far, I have elected to use two main data sources. Firstly, to obtain the most current data on the incidence of COVID-19, I have opted to utilise the data colelcted by the [Johns Hopkins Coronavirus Resource Centre](https://coronavirus.jhu.edu/). The [2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE](https://github.com/CSSEGISandData/COVID-19) is compiled from a cross section of sources daily. To supplement this data with relevant socio-demographic data, I have opted to utilise the [World Development Indicator Database](http://datatopics.worldbank.org/world-development-indicators/) maintained by the World Bank Group. The World Development Indicators is a compilation of relevant, high-quality, and internationally comparable statistics about global development and the fight against poverty. The database contains 1,600 time series indicators for 217 economies and more than 40 country groups, with data for many indicators going back more than 50 years.
+
+**Data Cleaning**
+
+A number of specialised data cleaning scripts were prepared to garner current data on a range of issues. These scripts can be found in the [GitHub repository](https://yohance-nicholas.github.io/Developing-Data-Products/) created to store the content and code generated in the completion of this course.
+
+**Developer**
+
+Yohance Nicholas | Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com) | [LinkedIn](https://www.linkedin.com/in/yohance-nicholas/) | [GitHub](https://yohance-nicholas.github.io/Developing-Data-Products/)
+
