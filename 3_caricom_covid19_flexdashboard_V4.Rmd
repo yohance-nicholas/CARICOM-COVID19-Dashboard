@@ -229,7 +229,7 @@ deaths_pie
 Column {.tabset .tabset-fade}
 -------------------------------------
 
-### Per 100,000 among Commodity Based Countries
+### Per 100k among Commodity Based Countries
 
 ```{r}
 deaths_commodity <- caricom_tidycovid19 %>%
@@ -246,7 +246,7 @@ ggplotly(deaths_commodity)
 ```
 
 
-### er 100,000 among Service Based Countries
+### Per 100k among Service Based Countries
 
 ```{r}
 deaths_services <-caricom_tidycovid19 %>%
@@ -264,11 +264,22 @@ library(plotly)
 ggplotly(deaths_services)
 ```
 
-### Share of Recoveries across CARICOM Member States
+### Per 100k among Service Based Countries
+
 ```{r}
+deaths_oecs <-caricom_tidycovid19 %>%
+    filter(oecs == "OECS Member State",
+           date >= as.Date("2020-03-07")
+    ) %>%
+    ggplot(aes(x = date, y = deaths_per_100k, col = country)) +
+    geom_line() +
+  labs(x = "Date",
+       y = "Confirmed Deaths per 100,000 Persons",
+       title = "Confirmed COVID-19 Cases among Service Based Economies",
+       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
+       Prepared by: Yohance Nicholas")
 library(plotly)
-recovered_pie <-  plot_ly(caricom_today, labels = ~country, values = ~recovered, type = 'pie')
-recovered_pie
+ggplotly(deaths_oecs)
 ```
 
 Recoveries

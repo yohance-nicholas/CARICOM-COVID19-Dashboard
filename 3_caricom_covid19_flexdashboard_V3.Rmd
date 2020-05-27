@@ -67,8 +67,10 @@ caricom_cumulative <- caricom_tidycovid19 %>%
   labs(x = "Date",
        y = "Confirmed Cases",
        caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
-       Prepared by: Yohance Nicholas")
-ggplotly(caricom_cumulative)
+       Prepared by: Yohance Nicholas") + 
+  theme(legend.position="bottom")
+ggplotly(caricom_cumulative) %>%
+  layout(legend = list(orientation = "h", x = 0.4, y = -0.2))
 ```
 
 ### Daily Increase in Cumulative Cases among 6 Worst Affected CARICOM Member States
@@ -79,12 +81,12 @@ gg <- caricom_tidycovid19 %>%
   filter(iso3c %in% top_6) %>%
   filter(date >= as.Date("2020-03-15")) %>%
   ggplot(aes(x = date, y = cases_logratio, col = country)) +
-  geom_hline(yintercept = log(2)/c(2:7,14,21), col='grey') +
   geom_smooth(method = "loess", se = FALSE) +
   labs(x = "Date",
-       y = "Confirmed Cases") +
+       y = "Daily Growth in Confirmed Cases (%)") +
   ggthemes::scale_color_colorblind()
-ggplotly(gg)
+ggplotly(gg) %>%
+  layout(legend = list(orientation = "h", x = 0.4, y = -0.2))
 ```
 
 Explore Relationships
@@ -225,7 +227,7 @@ deaths_pie
 Column {.tabset .tabset-fade}
 -------------------------------------
 
-### Per 100,000 among Commodity Based Countries
+### Per 100k among Commodity Based Countries
 
 ```{r}
 deaths_commodity <- caricom_tidycovid19 %>%
@@ -242,7 +244,7 @@ ggplotly(deaths_commodity)
 ```
 
 
-### er 100,000 among Service Based Countries
+### Per 100k among Service Based Countries
 
 ```{r}
 deaths_services <-caricom_tidycovid19 %>%
@@ -260,79 +262,22 @@ library(plotly)
 ggplotly(deaths_services)
 ```
 
-### Share of Recoveries across CARICOM Member States
-```{r}
-library(plotly)
-recovered_pie <-  plot_ly(caricom_today, labels = ~country, values = ~recovered, type = 'pie')
-recovered_pie
-```
-
-Recoveries
-=====================================
-
-Column {data-width=650}
------------------------------------------------------------------------
-
-### Share of Confirmed Cases across CARICOM Member States
-```{r}
-library(plotly)
-recoveries_pie <-  plot_ly(caricom_today, labels = ~country, values = ~recovered, type = 'pie')
-recoveries_pie
-```
-
-Column {.tabset .tabset-fade}
--------------------------------------
-
-### Commodity Based Countries
+### Per 100k among Service Based Countries
 
 ```{r}
-recovered_commodity <- caricom_tidycovid19 %>%
-  filter(economy == "Commodity Based",
-         date >= as.Date("2020-03-07")) %>%
-  ggplot(aes(x = date, y = recovered, col = country)) +
-  geom_line() +
-  labs(x = "Date",
-       y = "Recoveries",
-       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
-       Prepared by: Yohance Nicholas")
-library(plotly)
-ggplotly(recovered_commodity)
-```
-
-
-### Service Based Countries
-
-```{r}
-recovered_services <-caricom_tidycovid19 %>%
-    filter(economy == "Service Based",
-           date >= as.Date("2020-03-07")
-    ) %>%
-    ggplot(aes(x = date, y = recovered, col = country)) +
-    geom_line() +
-  labs(x = "Date",
-       y = "Recoveries",
-       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
-       Prepared by: Yohance Nicholas")
-library(plotly)
-ggplotly(recovered_services)
-```
-
-### OECS Member States
-
-```{r}
-recovered_oecs <-caricom_tidycovid19 %>%
+deaths_oecs <-caricom_tidycovid19 %>%
     filter(oecs == "OECS Member State",
-           economy == "Service Based",
            date >= as.Date("2020-03-07")
     ) %>%
-    ggplot(aes(x = date, y = recovered, col = country)) +
+    ggplot(aes(x = date, y = deaths_per_100k, col = country)) +
     geom_line() +
   labs(x = "Date",
-       y = "Recoveries",
+       y = "Confirmed Deaths per 100,000 Persons",
+       title = "Confirmed COVID-19 Cases among Service Based Economies",
        caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
        Prepared by: Yohance Nicholas")
 library(plotly)
-ggplotly(recovered_oecs)
+ggplotly(deaths_oecs)
 ```
 
 Impact of Restrictions
