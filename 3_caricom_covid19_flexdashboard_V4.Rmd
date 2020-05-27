@@ -79,12 +79,16 @@ gg <- caricom_tidycovid19 %>%
   filter(iso3c %in% top_6) %>%
   filter(date >= as.Date("2020-03-15")) %>%
   ggplot(aes(x = date, y = cases_logratio, col = country)) +
-  geom_hline(yintercept = log(2)/c(2:7,14,21), col='grey') +
   geom_smooth(method = "loess", se = FALSE) +
   labs(x = "Date",
-       y = "Confirmed Cases") +
+       y = "Growth in Confirmed Cases") +
   ggthemes::scale_color_colorblind()
 ggplotly(gg)
+```
+
+
+```{python}
+
 ```
 
 Explore Relationships
