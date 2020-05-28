@@ -11,7 +11,7 @@ output:
 library(flexdashboard)
 ```
 
-Overview
+Overview {.no-mobile}
 =====================================
 
 Column {data-width=600}
@@ -56,7 +56,7 @@ caricom_covid_map
 Column {data-width=400}
 -----------------------------------------------------------------------
 
-### Confirmed Cases among CARICOM Member States 
+### Confirmed Cases among CARICOM Member States {.no-mobile}
 
 ```{r}
 library(plotly)
@@ -73,7 +73,7 @@ ggplotly(caricom_cumulative) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-### Daily Increase in Cumulative Cases among 6 Worst Affected CARICOM Member States
+### Daily Increase in Cumulative Cases among 6 Worst Affected CARICOM Member States {.no-mobile}
 
 ```{r}
 gg <- caricom_tidycovid19 %>%
@@ -92,6 +92,32 @@ gg <- caricom_tidycovid19 %>%
 ggplotly(gg) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
+
+Mobile Overview {.mobile}
+=====================================
+
+Row
+-----------------------------------------------------------------------
+
+### Total Confirmed Cases in CARICOM
+
+```{r}
+valueBox(caricom_totals$total_confirmed, 
+         icon = "fa-lungs-virus")
+```
+
+### Total Deaths in CARICOM
+```{r}
+valueBox(caricom_totals$total_deaths, 
+         icon = "fa-skull-crossbones")
+```
+
+### Total Recoveries in CARICOM
+```{r}
+valueBox(caricom_totals$total_recovered, 
+         icon = "fa-head-side-mask")
+```
+
 
 Explore Relationships
 =====================================

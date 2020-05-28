@@ -87,9 +87,12 @@ ggplotly(gg)
 ```
 
 
-```{python}
+### Confirmed Cases in CARICOM
 
+```{r}
+valueBox(caricom_totals$total_confirmed, icon = "fa-virus")
 ```
+
 
 Explore Relationships
 =====================================
