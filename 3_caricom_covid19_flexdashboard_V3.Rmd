@@ -93,88 +93,92 @@ ggplotly(gg) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-Mobile Overview {.mobile}
+Impact of Restrictions
 =====================================
 
-Row
------------------------------------------------------------------------
-
-### Total Confirmed Cases in CARICOM
-
-```{r}
-valueBox(caricom_totals$total_confirmed, 
-         icon = "fa-lungs-virus")
-```
-
-### Total Deaths in CARICOM
-```{r}
-valueBox(caricom_totals$total_deaths, 
-         icon = "fa-skull-crossbones")
-```
-
-### Total Recoveries in CARICOM
-```{r}
-valueBox(caricom_totals$total_recovered, 
-         icon = "fa-head-side-mask")
-```
-
-
-Explore Relationships
-=====================================
-
-Column 
+Row {.tabset .tabset-fade}
 -------------------------------------
 
-### Box-plot Comparison of Confirmed Cases per 100k by Income Group
-```{r}
-library(ggplot2)
-confirmed_boxplot <- ggplot(world_covid_regression_data, 
-                     aes(x=factor(income), 
-                         y=confirmed_per_100k)) +
-  geom_boxplot() + 
-  labs(y="Confirmed Cases per 100k", 
-       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
-ggplotly(confirmed_boxplot)
-```
+### Residential {.no-mobile}
 
-### Box-plot Comparison of Confirmed Deaths per 100k by Income Group
 ```{r}
-library(ggplot2)
-deaths_boxplot <- ggplot(world_covid_regression_data, 
-                     aes(x=factor(income), 
-                         y=deaths_per_100k)) +
-  geom_boxplot() + 
-  labs(y="Deaths per 100k", 
-       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
-ggplotly(deaths_boxplot)
-```
-
-Column 
--------------------------------------
-
-### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 +
-```{r}
-regression_bi_ggplot <- world_today %>%
-  ggplot(aes(pop_65_over_2018, log(confirmed_per_100k))) +
-  geom_point() + 
-  stat_smooth(method = "lm") + 
-  labs(x = "Population Aged 65+",
-       y = "Confirmed Cases per 100,000 Persons (Log Scale)")
+residential_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_residential , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  ggtitle("Mobility Changes around Residential among 6 Worst Affected CARICOM Member States") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Residential among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
 library(plotly)
-ggplotly(regression_bi_ggplot)
+ggplotly(residential_facet)
 ```
 
-### Relationship Between Confirmed Deaths per 100k (Log Scale) and Population Aged 65 +
+### Recreational Areas {.no-mobile}
 
 ```{r}
-regression_bi_ggplot <- world_today %>%
-  ggplot(aes(pop_65_over_2018, log(deaths_per_100k))) +
-  geom_point() + 
-  stat_smooth(method = "lm") + 
-  labs(x = "Population Aged 65+",
-       y = "Deaths per 100,000 Persons (Log Scale)")
+recreation_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_retail_recreation , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Recreational Areas among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
 library(plotly)
-ggplotly(regression_bi_ggplot)
+ggplotly(recreation_facet)
+```
+
+### Workplaces {.no-mobile}
+
+```{r}
+workplaces_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_workplaces , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  ggtitle("Mobility Changes around Workplaces among 6 Worst Affected CARICOM Member States") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = " Mobility Changes to Workplaces among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(workplaces_facet)
+```
+
+### Public Parks {.no-mobile}
+
+```{r}
+parks_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_parks , col = country)) +
+  geom_point() +
+  geom_smooth(method = "loess") +
+  facet_wrap(. ~ country, ncol = 3) +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Public Parks among 6 Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(parks_facet)
 ```
 
 Confirmed
@@ -310,95 +314,64 @@ library(plotly)
 ggplotly(deaths_oecs)
 ```
 
-Impact of Restrictions
+Explore Relationships
 =====================================
 
-Row {.tabset .tabset-fade}
+Column 
 -------------------------------------
 
-### Residential {.no-mobile}
-
+### Box-plot Comparison of Confirmed Cases per 100k by Income Group
 ```{r}
-residential_facet <-  caricom_tidycovid19 %>%
-  filter(iso3c %in% top_6,
-         date >= as.Date("2020-03-01")) %>%
-  ggplot(aes(x = date, y = gcmr_residential , col = country)) +
-  geom_point() +
-  geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
-  xlab("Date") +
-  ylab("Percentage Change Compared to Baseline") +
-  ggtitle("Mobility Changes around Residential among 6 Worst Affected CARICOM Member States") +
-  labs(caption = "Source: Google COVID-19 Community Mobility Reports
-       Prepared by: Yohance Nicholas",
-       title = "Mobility Changes to Residential among 6 Worst Affected CARICOM Member States") +
-  ggthemes::scale_color_colorblind()
-library(plotly)
-ggplotly(residential_facet)
+library(ggplot2)
+confirmed_boxplot <- ggplot(world_covid_regression_data, 
+                     aes(x=factor(income), 
+                         y=confirmed_per_100k)) +
+  geom_boxplot() + 
+  labs(y="Confirmed Cases per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
+ggplotly(confirmed_boxplot)
 ```
 
-
-
-### Recreational Areas {.no-mobile}
-
+### Box-plot Comparison of Confirmed Deaths per 100k by Income Group
 ```{r}
-recreation_facet <-  caricom_tidycovid19 %>%
-  filter(iso3c %in% top_6,
-         date >= as.Date("2020-03-01")) %>%
-  ggplot(aes(x = date, y = gcmr_retail_recreation , col = country)) +
-  geom_point() +
-  geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
-  xlab("Date") +
-  ylab("Percentage Change Compared to Baseline") +
-  labs(caption = "Source: Google COVID-19 Community Mobility Reports
-       Prepared by: Yohance Nicholas",
-       title = "Mobility Changes to Recreational Areas among 6 Worst Affected CARICOM Member States") +
-  ggthemes::scale_color_colorblind()
-library(plotly)
-ggplotly(recreation_facet)
+library(ggplot2)
+deaths_boxplot <- ggplot(world_covid_regression_data, 
+                     aes(x=factor(income), 
+                         y=deaths_per_100k)) +
+  geom_boxplot() + 
+  labs(y="Deaths per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
+ggplotly(deaths_boxplot)
 ```
 
-### Workplaces {.no-mobile}
+Column 
+-------------------------------------
 
+### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 +
 ```{r}
-workplaces_facet <-  caricom_tidycovid19 %>%
-  filter(iso3c %in% top_6,
-         date >= as.Date("2020-03-01")) %>%
-  ggplot(aes(x = date, y = gcmr_workplaces , col = country)) +
-  geom_point() +
-  geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
-  xlab("Date") +
-  ylab("Percentage Change Compared to Baseline") +
-  ggtitle("Mobility Changes around Workplaces among 6 Worst Affected CARICOM Member States") +
-  labs(caption = "Source: Google COVID-19 Community Mobility Reports
-       Prepared by: Yohance Nicholas",
-       title = " Mobility Changes to Workplaces among 6 Worst Affected CARICOM Member States") +
-  ggthemes::scale_color_colorblind()
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(confirmed_per_100k))) +
+  geom_point() + 
+  stat_smooth(method = "lm") + 
+  labs(x = "Population Aged 65+",
+       y = "Confirmed Cases per 100,000 Persons (Log Scale)")
 library(plotly)
-ggplotly(workplaces_facet)
+ggplotly(regression_bi_ggplot)
 ```
 
-### Public Parks {.no-mobile}
+### Relationship Between Confirmed Deaths per 100k (Log Scale) and Population Aged 65 +
 
 ```{r}
-parks_facet <-  caricom_tidycovid19 %>%
-  filter(iso3c %in% top_6,
-         date >= as.Date("2020-03-01")) %>%
-  ggplot(aes(x = date, y = gcmr_parks , col = country)) +
-  geom_point() +
-  geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
-  xlab("Date") +
-  ylab("Percentage Change Compared to Baseline") +
-  labs(caption = "Source: Google COVID-19 Community Mobility Reports
-       Prepared by: Yohance Nicholas",
-       title = "Mobility Changes to Public Parks among 6 Worst Affected CARICOM Member States") +
-  ggthemes::scale_color_colorblind()
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(deaths_per_100k))) +
+  geom_point() + 
+  stat_smooth(method = "lm") + 
+  labs(x = "Population Aged 65+",
+       y = "Deaths per 100,000 Persons (Log Scale)")
 library(plotly)
-ggplotly(parks_facet)
+ggplotly(regression_bi_ggplot)
 ```
+
 
 About
 =====================================
