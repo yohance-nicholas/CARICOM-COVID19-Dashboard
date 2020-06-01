@@ -316,7 +316,7 @@ Impact of Restrictions
 Row {.tabset .tabset-fade}
 -------------------------------------
 
-### Residential
+### Residential {.no-mobile}
 
 ```{r}
 residential_facet <-  caricom_tidycovid19 %>%
@@ -337,7 +337,9 @@ library(plotly)
 ggplotly(residential_facet)
 ```
 
-### Recreational Areas
+
+
+### Recreational Areas {.no-mobile}
 
 ```{r}
 recreation_facet <-  caricom_tidycovid19 %>%
@@ -357,13 +359,12 @@ library(plotly)
 ggplotly(recreation_facet)
 ```
 
-### Workplaces
+### Workplaces {.no-mobile}
 
 ```{r}
 workplaces_facet <-  caricom_tidycovid19 %>%
   filter(iso3c %in% top_6,
-         date >= as.Date("2020-03-01"),
-         date <= as.Date("2020-04-26")) %>%
+         date >= as.Date("2020-03-01")) %>%
   ggplot(aes(x = date, y = gcmr_workplaces , col = country)) +
   geom_point() +
   geom_smooth(method = "loess") +
@@ -379,13 +380,12 @@ library(plotly)
 ggplotly(workplaces_facet)
 ```
 
-### Public Parks 
+### Public Parks {.no-mobile}
 
 ```{r}
 parks_facet <-  caricom_tidycovid19 %>%
   filter(iso3c %in% top_6,
-         date >= as.Date("2020-03-01"),
-         date <= as.Date("2020-04-26")) %>%
+         date >= as.Date("2020-03-01")) %>%
   ggplot(aes(x = date, y = gcmr_parks , col = country)) +
   geom_point() +
   geom_smooth(method = "loess") +
