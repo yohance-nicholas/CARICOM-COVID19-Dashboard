@@ -39,6 +39,9 @@ valueBox(caricom_totals$total_recovered, icon = "fa-pencil")
 CARICOM Map
 =====================================
 
+Column {data-width=600}
+-----------------------------------------------------------------------
+
 ### Spatial Distribution of COVID-19
 
 ```{r}
@@ -74,6 +77,9 @@ caricom_covid_map <- leaflet() %>%
             title="Legend") 
 caricom_covid_map 
 ```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
 
 ### Breakdown of Total Today
 
