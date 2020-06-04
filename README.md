@@ -1,5 +1,8 @@
 # CARICOM COVID-19 Dashboard
-Developed and Maintained by Yohance Nicholas | Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com) | [LinkedIn](https://www.linkedin.com/in/yohance-nicholas/) | [GitHub](https://github.com/yohance-nicholas)
+Developed and Maintained by 
+
+Yohance Nicholas | Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com) | [LinkedIn](https://www.linkedin.com/in/yohance-nicholas/) | [GitHub](https://github.com/yohance-nicholas)
+
 Date: May 5th 2020
 
 - [Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
