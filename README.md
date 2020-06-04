@@ -2,8 +2,8 @@
 Developed and Maintained by [Yohance Nicholas](https://www.linkedin.com/in/yohance-nicholas/)
 Date: 05/05/2020
 
-1.[Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
-2. [Mobile Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html)
+- [Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
+- [Mobile Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html)
 
 ## Overview
 
