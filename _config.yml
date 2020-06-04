@@ -1,3 +1,5 @@
 title: CARICOM COVID-19 Dashboard
 author: Yohance Nicholas
 remote_theme: poole-hyde
+
+theme: jekyll-theme-cayman
