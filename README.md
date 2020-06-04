@@ -1,8 +1,8 @@
 # CARICOM COVID-19 Dashboard
 Developed and Maintained by 
-*Yohance Nicholas* ;
-Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com);
-[LinkedIn](https://www.linkedin.com/in/yohance-nicholas/);
+**Yohance Nicholas** <br />
+Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com)< br />
+[LinkedIn](https://www.linkedin.com/in/yohance-nicholas/) <br />
 [GitHub](https://github.com/yohance-nicholas)
 
 Date: May 5th 2020
