@@ -1,6 +1,5 @@
 ---
 title: 'CARICOM COVID-19 Dashboard'
-author: "Yohance Nicholas"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
