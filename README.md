@@ -1,6 +1,9 @@
 # CARICOM COVID-19 Dashboard
-Prepared by Yohance Nicholas 
+Developed and Maintained by [Yohance Nicholas](https://www.linkedin.com/in/yohance-nicholas/)
 Date: 05/05/2020
+
+1.[Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
+2. [Mobile Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html)
 
 ## Overview
 
@@ -59,5 +62,5 @@ Additionally, Google COVID-19 Community Mobility Reports data. As of April 17, G
 
 In addition to this readme file, the repository contains the R Markdown files for my first attempts at using the flexdashboard platform. Two versions of the implementation are currently under development:
 
-[1. Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
-[2. Mobile Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html)
+1.[Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
+2. [Mobile Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html)
