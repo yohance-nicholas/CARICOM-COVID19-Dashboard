@@ -1,7 +1,5 @@
 # CARICOM COVID-19 Dashboard
-Developed and Maintained by 
-
-Yohance Nicholas  Consultant Economist @ [Kairi Consultants Limited](https://www.kairi.com),  [LinkedIn](https://www.linkedin.com/in/yohance-nicholas/), [GitHub](https://github.com/yohance-nicholas)
+Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) 
 
 Date: May 5th 2020
 
@@ -20,7 +18,7 @@ This dashboard was prepared with a view to familiarise myself with the [`flexdas
 
 ## Rationale
 
-The Coronavirus disease 2019 (COVID-19) is an infectious disease caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). The disease was first identified in December 2019 in Wuhan, the capital of China's Hubei province, and has since spread globally, resulting in the ongoing 2019–20 coronavirus pandemic. For this coursework project, I have opted to use Leaflet to map the incidence of the Novel Coronavirus among [CARICOM Member States](https://caricom.org/member-states-and-associate-members/). All CARICOM countries are classified as developing countries. They are all relatively small in terms of population and size, and diverse in terms of geography and population, culture and levels of economic and social development.  While the pandemic was slow to reach the CARICOM region, the begining of March saw the onset of the pandemic among CARICOM member states. 
+The Coronavirus disease 2019 (COVID-19) is an infectious disease caused by severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2). The disease was first identified in December 2019 in Wuhan, the capital of China's Hubei province, and has since spread globally, resulting in the ongoing 2019–20 coronavirus pandemic. For this project, I have opted to use `flexdashboard` to explore the evoluation and spread of the Novel Coronavirus among [CARICOM Member States](https://caricom.org/member-states-and-associate-members/). All CARICOM countries are classified as developing countries. They are all relatively small in terms of population and size, and diverse in terms of geography and population, culture and levels of economic and social development.  While the pandemic was slow to reach the CARICOM region, the begining of March saw the onset of the pandemic among CARICOM member states. 
 
 ## Data Sources
 
@@ -62,10 +60,3 @@ These Community Mobility Reports aim to provide insights into what has changed i
 - `gcmr_transit_stations`	Google Community Mobility Reports data for the frequency that people visit transit stations expressed as a percentage*100 change relative to the baseline period Jan 3 - Feb 6, 2020
 - `gcmr_workplaces`	Google Community Mobility Reports data for the frequency that people visit workplaces expressed as a percentage*100 change relative to the baseline period Jan 3 - Feb 6, 2020
 - `gcmr_residential`	Google Community Mobility Reports data for the frequency that people visit residential places expressed as a percentage*100 change relative to the baseline period Jan 3 - Feb 6, 2020
-
-# Files in the Repository
-
-In addition to this readme file, the repository contains the R Markdown files for my first attempts at using the flexdashboard platform. Two versions of the implementation are currently under development:
-
-1.[Desktop Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html)
-2. [Mobile Version](https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html)
