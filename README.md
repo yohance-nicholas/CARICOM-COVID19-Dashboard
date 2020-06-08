@@ -1,5 +1,11 @@
-# CARICOM COVID-19 Dashboard
-Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) 
+<style>
+body {
+text-align: justify}
+</style>
+
+Developed and Maintained by 
+
+[**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) 
 
 Date: May 5th 2020
 
