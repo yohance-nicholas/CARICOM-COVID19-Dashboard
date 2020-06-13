@@ -127,6 +127,73 @@ ggplotly(gg) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
+Explore Relationships
+=====================================
+
+Column 
+-------------------------------------
+
+### Box-plot Comparison of Confirmed Cases per 100k by Income Group (World)
+```{r}
+library(ggplot2)
+confirmed_boxplot <- ggplot(world_covid_regression_data, 
+                     aes(x=factor(income), 
+                         y=confirmed_per_100k)) +
+  geom_boxplot() + 
+  labs(y="Confirmed Cases per 100k", 
+       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
+ggplotly(confirmed_boxplot)
+```
+
+### Recovery and Mortality Rate (CARICOM)
+```{r}
+library(plotly)
+bubble <- plot_ly(caricom_today,
+        y = ~ round(recovery_rate, 1),
+        x = ~ round(mortality_rate, 1),
+        size = ~  log(confirmed),
+        sizes = c(5, 70),
+        type = 'scatter', mode = 'markers',
+        color = ~ country,
+        marker = list(sizemode = 'diameter' , opacity = 0.5),
+        hoverinfo = 'text',
+        text = ~paste("", country, 
+                      " Confirmed Cases: ", confirmed,
+                      " Recovery Rate: ", paste(round(recovery_rate, 1), "%", sep = ""),
+                      " Mortality Rate: ",  paste(round(mortality_rate, 1), "%", sep = ""))
+        ) %>%
+  layout(yaxis = list(title = "Recovery Rate", ticksuffix = "%"),
+                 xaxis = list(title = "Death Rate", ticksuffix = "%", 
+                              dtick = 1, 
+                              tick0 = 0),
+                 hovermode = "compare")
+
+bubble
+```
+
+Column 
+-------------------------------------
+
+### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 + (World)
+```{r}
+regression_bi_ggplot <- world_today %>%
+  ggplot(aes(pop_65_over_2018, log(confirmed_per_100k))) +
+  geom_point() + 
+  stat_smooth(method = "lm") + 
+  labs(x = "Population Aged 65+",
+       y = "Confirmed Cases per 100,000 Persons (Log Scale)")
+library(plotly)
+ggplotly(regression_bi_ggplot)
+```
+
+### Mortality and Recovery by Income and Economy Type (CARICOM)
+```{r}
+library(knitr)
+kable(summarise(by_economy_type, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_income, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+```
+
 Impact of Restrictions
 =====================================
 
@@ -347,65 +414,6 @@ deaths_oecs <-caricom_tidycovid19 %>%
 library(plotly)
 ggplotly(deaths_oecs)
 ```
-
-Explore Relationships
-=====================================
-
-Column 
--------------------------------------
-
-### Box-plot Comparison of Confirmed Cases per 100k by Income Group
-```{r}
-library(ggplot2)
-confirmed_boxplot <- ggplot(world_covid_regression_data, 
-                     aes(x=factor(income), 
-                         y=confirmed_per_100k)) +
-  geom_boxplot() + 
-  labs(y="Confirmed Cases per 100k", 
-       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
-ggplotly(confirmed_boxplot)
-```
-
-### Box-plot Comparison of Confirmed Deaths per 100k by Income Group
-```{r}
-library(ggplot2)
-deaths_boxplot <- ggplot(world_covid_regression_data, 
-                     aes(x=factor(income), 
-                         y=deaths_per_100k)) +
-  geom_boxplot() + 
-  labs(y="Deaths per 100k", 
-       x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
-ggplotly(deaths_boxplot)
-```
-
-Column 
--------------------------------------
-
-### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 +
-```{r}
-regression_bi_ggplot <- world_today %>%
-  ggplot(aes(pop_65_over_2018, log(confirmed_per_100k))) +
-  geom_point() + 
-  stat_smooth(method = "lm") + 
-  labs(x = "Population Aged 65+",
-       y = "Confirmed Cases per 100,000 Persons (Log Scale)")
-library(plotly)
-ggplotly(regression_bi_ggplot)
-```
-
-### Relationship Between Confirmed Deaths per 100k (Log Scale) and Population Aged 65 +
-
-```{r}
-regression_bi_ggplot <- world_today %>%
-  ggplot(aes(pop_65_over_2018, log(deaths_per_100k))) +
-  geom_point() + 
-  stat_smooth(method = "lm") + 
-  labs(x = "Population Aged 65+",
-       y = "Deaths per 100,000 Persons (Log Scale)")
-library(plotly)
-ggplotly(regression_bi_ggplot)
-```
-
 
 About
 =====================================

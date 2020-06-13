@@ -20,33 +20,35 @@ Row
 ### Confirmed Cases in CARICOM
 
 ```{r}
-valueBox(caricom_totals$total_confirmed, icon = "fa-ambulance")
+valueBox(caricom_totals$total_confirmed, icon = "fa-ambulance",
+         href = "#growth")
 ```
 
 ### Active Cases in CARICOM
 
 ```{r}
-valueBox(caricom_totals$total_active, icon = "fa-hospital", color = "warning")
+valueBox(caricom_totals$total_active, icon = "fa-hospital", color = "warning",
+         href = "#caricom-map")
 ```
 
 ### Total Recoveries in CARICOM
 
 ```{r}
-valueBox(caricom_totals$total_recovered, icon = "fa-male", color = "success")
+valueBox(caricom_totals$total_recovered, icon = "fa-male", color = "success",
+         href = "#impact-of-restrictions")
 ```
 
 ### Confirmed Deaths in CARICOM
 
 ```{r}
-valueBox(caricom_totals$total_deaths, icon = "fa-skull", color = "danger")
+valueBox(caricom_totals$total_deaths, icon = "fa-skull", color = "danger",
+         href = "#caricom-map")
 ```
-
-
 
 CARICOM Map
 =====================================
 
-Column {data-width=600}
+Row
 -----------------------------------------------------------------------
 
 ### Spatial Distribution of COVID-19
@@ -85,41 +87,53 @@ caricom_covid_map <- leaflet() %>%
 caricom_covid_map 
 ```
 
-Column {data-width=350}
+Recovery 
+=====================================
+
+Column
 -----------------------------------------------------------------------
 
-### Breakdown of Total Today
-
+### Recovery and Mortality Rate
 ```{r}
 library(plotly)
-horizontal_barplot <- caricom_tidycovid19_cases %>% 
-  filter(date == max(date)) %>% 
-  ggplot( 
-       aes(x = country,
-           y = value,
-           fill = cases))+
-  labs(x = "Total Cases by Status",
-       y = "Member State") +
-  geom_bar(position = "stack",
-           stat = "identity") +
-  coord_flip() 
-ggplotly(horizontal_barplot)
+bubble <- plot_ly(caricom_today,
+        y = ~ round(recovery_rate, 1),
+        x = ~ round(mortality_rate, 1),
+        size = ~  log(confirmed),
+        sizes = c(5, 70),
+        type = 'scatter', mode = 'markers',
+        color = ~ country,
+        marker = list(sizemode = 'diameter' , opacity = 0.5),
+        hoverinfo = 'text',
+        text = ~paste("", country, 
+                      " Confirmed Cases: ", confirmed,
+                      " Recovery Rate: ", paste(round(recovery_rate, 1), "%", sep = ""),
+                      " Mortality Rate: ",  paste(round(mortality_rate, 1), "%", sep = ""))
+        ) %>%
+  layout(yaxis = list(title = "Recovery Rate", ticksuffix = "%"),
+                 xaxis = list(title = "Death Rate", ticksuffix = "%", 
+                              dtick = 1, 
+                              tick0 = 0),
+                 hovermode = "compare")
+
+bubble
 ```
 
+Column
+-----------------------------------------------------------------------
+
+### Mortality and Recovery by Income and Economy Type
 ```{r}
-gg_barchart <- caricom_today %>%
-  arrange(desc(confirmed)) %>% 
-  ggplot(
-    aes(x = confirmed,
-        y = country)) +
-  geom_col()
-ggplotly(gg_barchart)
+library(knitr)
+kable(summarise(by_economy_type, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_income, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
 ```
 
 Growth
 =====================================
 
-Row
+Column
 -----------------------------------------------------------------------
 
 ### Daily Increase in Cumulative Cases among 6 Worst Affected CARICOM Member States
@@ -141,6 +155,27 @@ gg <- caricom_tidycovid19 %>%
   ggthemes::scale_color_colorblind()
 ggplotly(gg) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
+```
+
+Column
+-----------------------------------------------------------------------
+
+### Breakdown of Total Today
+
+```{r}
+library(plotly)
+horizontal_barplot <- caricom_tidycovid19_cases %>% 
+  filter(date == max(date)) %>% 
+  ggplot( 
+       aes(x = country,
+           y = value,
+           fill = cases))+
+  labs(x = "Total Cases by Status",
+       y = "Member State") +
+  geom_bar(position = "stack",
+           stat = "identity") +
+  coord_flip() 
+ggplotly(horizontal_barplot)
 ```
 
 
