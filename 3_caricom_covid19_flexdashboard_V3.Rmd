@@ -8,9 +8,45 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+source("https://git.io/Jfqjv", local = T)
 ```
 
-Overview {.no-mobile}
+Overview
+=====================================
+
+Row
+-----------------------------------------------------------------------
+
+### Confirmed Cases in CARICOM
+
+```{r}
+valueBox(caricom_totals$total_confirmed, 
+         icon = "fa-ambulance",
+         href = "#confirmed")
+```
+
+### Active Cases in CARICOM
+
+```{r}
+valueBox(caricom_totals$total_active, icon = "fa-hospital", color = "warning",
+         href = "#map")
+```
+
+### Total Recoveries in CARICOM
+
+```{r}
+valueBox(caricom_totals$total_recovered, icon = "fa-male", color = "success",
+         href = "#map")
+```
+
+### Confirmed Deaths in CARICOM
+
+```{r}
+valueBox(caricom_totals$total_deaths, icon = "fa-skull", color = "danger",
+         href = "#deaths")
+```
+
+Map
 =====================================
 
 Column {data-width=600}
@@ -19,7 +55,6 @@ Column {data-width=600}
 ### Spatial Distribution of COVID-19
 
 ```{r}
-source("https://git.io/Jfqjv", local = T)
 library(leaflet)
 library(leaflet.extras)
 caricom_covid_map <- leaflet() %>% 
