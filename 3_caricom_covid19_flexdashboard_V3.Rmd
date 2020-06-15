@@ -8,8 +8,13 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+```
+
+```{r}
+# Import Clean Dataset
 source("https://git.io/Jfqjv", local = T)
 ```
+
 
 Overview
 =====================================
