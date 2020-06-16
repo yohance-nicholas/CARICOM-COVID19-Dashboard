@@ -87,49 +87,6 @@ caricom_covid_map <- leaflet() %>%
 caricom_covid_map 
 ```
 
-Recovery 
-=====================================
-
-Column
------------------------------------------------------------------------
-
-### Recovery and Mortality Rate
-```{r}
-library(plotly)
-bubble <- plot_ly(caricom_today,
-        y = ~ round(recovery_rate, 1),
-        x = ~ round(mortality_rate, 1),
-        size = ~  log(confirmed),
-        sizes = c(5, 70),
-        type = 'scatter', mode = 'markers',
-        color = ~ country,
-        marker = list(sizemode = 'diameter' , opacity = 0.5),
-        hoverinfo = 'text',
-        text = ~paste("", country, 
-                      " Confirmed Cases: ", confirmed,
-                      " Recovery Rate: ", paste(round(recovery_rate, 1), "%", sep = ""),
-                      " Mortality Rate: ",  paste(round(mortality_rate, 1), "%", sep = ""))
-        ) %>%
-  layout(yaxis = list(title = "Recovery Rate", ticksuffix = "%"),
-                 xaxis = list(title = "Death Rate", ticksuffix = "%", 
-                              dtick = 1, 
-                              tick0 = 0),
-                 hovermode = "compare")
-
-bubble
-```
-
-Column
------------------------------------------------------------------------
-
-### Mortality and Recovery by Income and Economy Type
-```{r}
-library(knitr)
-kable(summarise(by_economy_type, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
-kable(summarise(by_income, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
-kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
-```
-
 Growth
 =====================================
 
@@ -176,6 +133,49 @@ horizontal_barplot <- caricom_tidycovid19_cases %>%
            stat = "identity") +
   coord_flip() 
 ggplotly(horizontal_barplot)
+```
+
+Recovery 
+=====================================
+
+Column
+-----------------------------------------------------------------------
+
+### Recovery and Mortality Rate
+```{r}
+library(plotly)
+bubble <- plot_ly(caricom_today,
+        y = ~ round(recovery_rate, 1),
+        x = ~ round(mortality_rate, 1),
+        size = ~  log(confirmed),
+        sizes = c(5, 70),
+        type = 'scatter', mode = 'markers',
+        color = ~ country,
+        marker = list(sizemode = 'diameter' , opacity = 0.5),
+        hoverinfo = 'text',
+        text = ~paste("", country, 
+                      " Confirmed Cases: ", confirmed,
+                      " Recovery Rate: ", paste(round(recovery_rate, 1), "%", sep = ""),
+                      " Mortality Rate: ",  paste(round(mortality_rate, 1), "%", sep = ""))
+        ) %>%
+  layout(yaxis = list(title = "Recovery Rate", ticksuffix = "%"),
+                 xaxis = list(title = "Death Rate", ticksuffix = "%", 
+                              dtick = 1, 
+                              tick0 = 0),
+                 hovermode = "compare")
+
+bubble
+```
+
+Column
+-----------------------------------------------------------------------
+
+### Mortality and Recovery by Income and Economy Type
+```{r}
+library(knitr)
+kable(summarise(by_economy_type, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_income, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
 ```
 
 
