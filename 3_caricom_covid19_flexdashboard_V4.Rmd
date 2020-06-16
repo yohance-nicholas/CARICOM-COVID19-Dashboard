@@ -35,7 +35,7 @@ valueBox(caricom_totals$total_active, icon = "fa-hospital", color = "warning",
 
 ```{r}
 valueBox(caricom_totals$total_recovered, icon = "fa-male", color = "success",
-         href = "#impact-of-restrictions")
+         href = "#recovery")
 ```
 
 ### Confirmed Deaths in CARICOM
