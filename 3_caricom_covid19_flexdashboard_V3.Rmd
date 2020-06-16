@@ -98,23 +98,29 @@ Column {data-width=400}
 ### Confirmed Cases among CARICOM Member States {.no-mobile}
 
 ```{r}
-library(plotly)
-caricom_cumulative <- caricom_tidycovid19 %>% 
-  filter(date >= as.Date("2020-03-07")) %>% 
-  ggplot(aes(x=date, y=confirmed, fill = iso3c)) +
-  geom_area() +
-  labs(x = "Date",
-       y = "Confirmed Cases",
-       caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
-       Prepared by: Yohance Nicholas") + 
-  theme(legend.position="bottom")
-ggplotly(caricom_cumulative) %>%
-  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
+library(highcharter)
+hc_area <- caricom_totals_ts %>% 
+  select(-total_confirmed) %>% 
+  gather(cases, value, total_deaths, total_recovered, total_active) %>% 
+  hchart("area", 
+         hcaes(x = date, y = value, group =cases)) %>% 
+  hc_plotOptions(area = list(
+    stacking = "normal",
+    lineColor = "#ffffff",
+    lineWidth = 1,
+    marker = list(
+      lineWidth = 1,
+      lineColor = "#ffffff"
+    ))
+  ) %>% hc_add_theme(hc_theme_smpl())
+hc_area
+
 ```
 
-### Daily Increase in Cumulative Cases among 6 Worst Affected CARICOM Member States {.no-mobile}
+### Daily Increase in Cumulative Cases among Worst Affected CARICOM Member States {.no-mobile}
 
 ```{r}
+library(plotly)
 gg <- caricom_tidycovid19 %>%
   mutate(cases_logratio = difference(log(confirmed))) %>%
   filter(iso3c %in% top_6) %>%
@@ -205,86 +211,120 @@ Impact of Restrictions
 Row {.tabset .tabset-fade}
 -------------------------------------
 
-### Residential {.no-mobile}
+### Residential 
 
 ```{r}
 residential_facet <-  caricom_tidycovid19 %>%
   filter(iso3c %in% top_6,
          date >= as.Date("2020-03-01")) %>%
   ggplot(aes(x = date, y = gcmr_residential , col = country)) +
-  geom_point() +
   geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
   xlab("Date") +
   ylab("Percentage Change Compared to Baseline") +
-  ggtitle("Mobility Changes around Residential among 6 Worst Affected CARICOM Member States") +
+  ggtitle("Mobility Changes around Residential among Worst Affected CARICOM Member States") +
   labs(caption = "Source: Google COVID-19 Community Mobility Reports
        Prepared by: Yohance Nicholas",
-       title = "Mobility Changes to Residential among 6 Worst Affected CARICOM Member States") +
+       title = "Mobility Changes to Residential among Worst Affected CARICOM Member States") +
   ggthemes::scale_color_colorblind()
 library(plotly)
-ggplotly(residential_facet)
+ggplotly(residential_facet) %>%
+  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-### Recreational Areas {.no-mobile}
+### Recreational Areas
 
 ```{r}
 recreation_facet <-  caricom_tidycovid19 %>%
   filter(iso3c %in% top_6,
          date >= as.Date("2020-03-01")) %>%
   ggplot(aes(x = date, y = gcmr_retail_recreation , col = country)) +
-  geom_point() +
   geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
   xlab("Date") +
   ylab("Percentage Change Compared to Baseline") +
   labs(caption = "Source: Google COVID-19 Community Mobility Reports
        Prepared by: Yohance Nicholas",
-       title = "Mobility Changes to Recreational Areas among 6 Worst Affected CARICOM Member States") +
+       title = "Mobility Changes to Recreational Areas among Worst Affected CARICOM Member States") +
   ggthemes::scale_color_colorblind()
 library(plotly)
-ggplotly(recreation_facet)
+ggplotly(recreation_facet) %>%
+  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-### Workplaces {.no-mobile}
+### Workplaces
 
 ```{r}
 workplaces_facet <-  caricom_tidycovid19 %>%
   filter(iso3c %in% top_6,
          date >= as.Date("2020-03-01")) %>%
   ggplot(aes(x = date, y = gcmr_workplaces , col = country)) +
-  geom_point() +
   geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
   xlab("Date") +
   ylab("Percentage Change Compared to Baseline") +
-  ggtitle("Mobility Changes around Workplaces among 6 Worst Affected CARICOM Member States") +
+  ggtitle("Mobility Changes around Workplaces among Worst Affected CARICOM Member States") +
   labs(caption = "Source: Google COVID-19 Community Mobility Reports
        Prepared by: Yohance Nicholas",
-       title = " Mobility Changes to Workplaces among 6 Worst Affected CARICOM Member States") +
+       title = " Mobility Changes to Workplaces among Worst Affected CARICOM Member States") +
   ggthemes::scale_color_colorblind()
 library(plotly)
-ggplotly(workplaces_facet)
+ggplotly(workplaces_facet) %>%
+  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-### Public Parks {.no-mobile}
+### Public Parks 
 
 ```{r}
 parks_facet <-  caricom_tidycovid19 %>%
   filter(iso3c %in% top_6,
          date >= as.Date("2020-03-01")) %>%
   ggplot(aes(x = date, y = gcmr_parks , col = country)) +
-  geom_point() +
   geom_smooth(method = "loess") +
-  facet_wrap(. ~ country, ncol = 3) +
   xlab("Date") +
   ylab("Percentage Change Compared to Baseline") +
   labs(caption = "Source: Google COVID-19 Community Mobility Reports
        Prepared by: Yohance Nicholas",
-       title = "Mobility Changes to Public Parks among 6 Worst Affected CARICOM Member States") +
+       title = "Mobility Changes to Public Parks among Worst Affected CARICOM Member States") +
   ggthemes::scale_color_colorblind()
 library(plotly)
-ggplotly(parks_facet)
+ggplotly(parks_facet) %>%
+  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
+```
+
+### Transit Stations
+
+```{r}
+parks_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_transit_stations , col = country)) +
+  geom_smooth(method = "loess") +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Transit Stations among Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(parks_facet) %>%
+  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
+```
+
+### Groceries and Pharmacies
+
+```{r}
+parks_facet <-  caricom_tidycovid19 %>%
+  filter(iso3c %in% top_6,
+         date >= as.Date("2020-03-01")) %>%
+  ggplot(aes(x = date, y = gcmr_grocery_pharmacy , col = country)) +
+  geom_smooth(method = "loess") +
+  xlab("Date") +
+  ylab("Percentage Change Compared to Baseline") +
+  labs(caption = "Source: Google COVID-19 Community Mobility Reports
+       Prepared by: Yohance Nicholas",
+       title = "Mobility Changes to Groceries and Pharmacies among Worst Affected CARICOM Member States") +
+  ggthemes::scale_color_colorblind()
+library(plotly)
+ggplotly(parks_facet) %>%
+  layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
 Confirmed
