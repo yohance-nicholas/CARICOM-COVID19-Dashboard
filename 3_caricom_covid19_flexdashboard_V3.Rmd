@@ -144,6 +144,14 @@ Explore Relationships
 Column 
 -------------------------------------
 
+### Mortality and Recovery by Income and Economy Type (CARICOM)
+```{r}
+library(knitr)
+kable(summarise(by_economy_type, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_income, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
+```
+
 ### Box-plot Comparison of Confirmed Cases per 100k by Income Group (World)
 ```{r}
 library(ggplot2)
@@ -155,6 +163,9 @@ confirmed_boxplot <- ggplot(world_covid_regression_data,
        x="Income Group (1 = Low Income, 2 = Lower Middle Income, 3 = Upper Middle Income, 4 = High Income)")
 ggplotly(confirmed_boxplot)
 ```
+
+Column 
+-------------------------------------
 
 ### Recovery and Mortality Rate (CARICOM)
 ```{r}
@@ -182,9 +193,6 @@ bubble <- plot_ly(caricom_today,
 bubble
 ```
 
-Column 
--------------------------------------
-
 ### Relationship Between Confirmed Cases per 100k (Log Scale) and Population Aged 65 + (World)
 ```{r}
 regression_bi_ggplot <- world_today %>%
@@ -197,16 +205,10 @@ library(plotly)
 ggplotly(regression_bi_ggplot)
 ```
 
-### Mortality and Recovery by Income and Economy Type (CARICOM)
-```{r}
-library(knitr)
-kable(summarise(by_economy_type, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
-kable(summarise(by_income, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
-kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(recovery_rate)))
-```
 
 Impact of Restrictions
 =====================================
+
 
 Row {.tabset .tabset-fade}
 -------------------------------------
