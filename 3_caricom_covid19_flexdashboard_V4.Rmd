@@ -156,7 +156,7 @@ hc_area <- caricom_totals_ts %>%
       lineWidth = 1,
       lineColor = "#ffffff"
     ))
-  ) %>% hc_add_theme(hc_theme_smpl())
+  ) %>% hc_add_theme(hc_theme_elementary())
 hc_area
 
 ```
