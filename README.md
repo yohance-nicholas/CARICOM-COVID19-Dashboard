@@ -3,17 +3,15 @@ body {
 text-align: justify}
 </style>
 
-Developed and Maintained by 
-
-[**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) 
+Developed and Maintained by [**Yohance Nicholas**](www.kairi.com) [![github](https://cloud.githubusercontent.com/assets/17016297/18839843/0e06a67a-83d2-11e6-993a-b35a182500e0.png)][4]][![linkedin](https://cloud.githubusercontent.com/assets/17016297/18839848/0fc7e74e-83d2-11e6-8c6a-277fc9d6e067.png)][3]
 
 Date: May 5th 2020
 
-**Desktop Version** [![Desktop Version](TOWER-PC.png)][1]
+## Version
 
-**Mobile Version** [![Mobile Version](smartphone-call.png)][2]
-
-
+|**Desktop** | **Mobile** |
+| ------------- | ------------- |
+|[![Desktop Version](tower-pc.png)][1] |  [![Mobile Version](smartphone-call.png)][2]|
 
 ## Overview
 
@@ -71,3 +69,6 @@ These Community Mobility Reports aim to provide insights into what has changed i
 
 [1]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html
 [2]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html
+[3]: https://www.linkedin.com/in/yohance-nicholas/
+[4]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/
+
