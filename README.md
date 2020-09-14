@@ -1,5 +1,3 @@
-Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) [![Github](GitHub-Mark-32px.png)][3]
-
 Date: May 5th 2020
 
 ## Version
@@ -62,9 +60,12 @@ These Community Mobility Reports aim to provide insights into what has changed i
 - `gcmr_workplaces`	Google Community Mobility Reports data for the frequency that people visit workplaces expressed as a percentage*100 change relative to the baseline period Jan 3 - Feb 6, 2020
 - `gcmr_residential`	Google Community Mobility Reports data for the frequency that people visit residential places expressed as a percentage*100 change relative to the baseline period Jan 3 - Feb 6, 2020
 
+Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) 
+
 [1]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html
 [2]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html
 [3]: https://github.com/yohance-nicholas
+
 
 <style>
 body {
