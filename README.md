@@ -1,3 +1,5 @@
+[![CARICOM COVID-19 Dashboard](novelcoronavirus-optimized.jpg)]
+
 Date: May 5th 2020
 
 ## Version
