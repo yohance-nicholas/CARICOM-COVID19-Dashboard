@@ -1,10 +1,10 @@
-Date: May 5th 2020
-
 |**Desktop** | **Mobile** |
 | :--: | :--:  |
 |[![Desktop Version](tower-pc.png)][1] |  [![Mobile Version](smartphone-call.png)][2]|
 
 ![](Eauiqh0XQAAME57.jpg)
+
+Date: May 5th 2020
 
 ## Overview
 
