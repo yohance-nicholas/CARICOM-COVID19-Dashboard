@@ -4,8 +4,6 @@
 
 ![](Eauiqh0XQAAME57.jpg)
 
-Date: May 5th 2020
-
 ## Overview
 
 This dashboard was prepared with a view to familiarise myself with the [`flexdashboard`](https://rmarkdown.rstudio.com/flexdashboard/) suite offered by RStudio. Flexdashboard enables users to easily create flexible, attractive, interactive dashboards with R. Authoring and customization of dashboards is done using R Markdown and you can optionally include Shiny components for additional interactivity. Flexdashboards allow users to:
@@ -61,6 +59,8 @@ These Community Mobility Reports aim to provide insights into what has changed i
 - `gcmr_residential`	Google Community Mobility Reports data for the frequency that people visit residential places expressed as a percentage*100 change relative to the baseline period Jan 3 - Feb 6, 2020
 
 Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) 
+
+Date: May 5th 2020
 
 [1]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html
 [2]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html
