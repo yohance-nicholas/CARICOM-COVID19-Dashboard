@@ -65,8 +65,12 @@ These Community Mobility Reports aim to provide insights into what has changed i
 [1]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html
 [2]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html
 [3]: https://github.com/yohance-nicholas
+
 <style>
 body {
 text-align: justify}
 </style>
+
+<link rel="shortcut icon" type="image/x-icon" href="coronavirus__1__WfK_icon.ico">
+
 
