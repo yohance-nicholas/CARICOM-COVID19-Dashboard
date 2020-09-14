@@ -372,10 +372,8 @@ text-align: justify}
 <p>Developed and Maintained by</p>
 <p><a href="https://www.linkedin.com/in/yohance-nicholas/"><strong>Yohance Nicholas</strong></a></p>
 <p>Date: May 5th 2020</p>
-<ul>
-<li><a href="https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html">Desktop Version</a></li>
-<li><a href="https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html">Mobile Version</a></li>
-</ul>
+<p><strong>Desktop Version</strong> <a href="https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAA7AAAAOwBeShxvQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAFdSURBVFiF7da/LgRRFAbw36yNUrBEdBKhI55DNEqi8BaiFWQLTyH+dKLxFip0SDQagmhkN5ZR7FhrzOxOZGxjvmSSyT3nfue755t751KgQAG2UEeYw1PHRsS73YW3jk3RSyWnxYziBUHEO9wht4JaEKkJchJQwivKeM8yoZxT4SSEWO+SU/1LAQGGsiSGORYt4S0qnsWCsJRj8V/hLy1oR4BlzW4finW9Fxas4AznkZBW7V5b8GPL98qC/TYBB/FgsQugmhNf0pE+g/nY2Aku2gU8ZSBfwd4vBPDzRGzllXGFCTx3IR9IIIpjEJexsVmsxcY+t6QAk1hEXwLhKk5F7WojnMNuQn4DR7jR/BhLOlsQlnGNnVjCFJY0/9lvvq+8gRH0a55qVwlC4lakWpDm2TWOcZcShzEsYDpFQA3jeEyZX8FtUiDAg2xXsPsOArciEWlza76ubwUK/GN8AI/HbhinOFB6AAAAAElFTkSuQmCC" alt="Desktop Version" /></a></p>
+<p><strong>Mobile Version</strong> <a href="https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAAyoAAAMqAG3TiDWAAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAADlQTFRF////AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlx7TAAAABJ0Uk5TAA4XOEZIW1xwj5DQ2Ojs9Pj7WF6rNwAAAGBJREFUOE/tkzkOwCAMBM0dAuHY/z82iKMwSn7AVIs1lEM0cBGM6Ighcj+HuxH6zIIJevwrT6OMrZlg4C+Gh9kExd6kjnCEI5jVZEprcWGmhyplxVd6M17A2jm2eP/zfwE7ag2zg/TEcgAAAABJRU5ErkJggg==" alt="Mobile Version" /></a></p>
 <div id="overview" class="section level2">
 <h2>Overview</h2>
 <p>This dashboard was prepared with a view to familiarise myself with the <a href="https://rmarkdown.rstudio.com/flexdashboard/"><code>flexdashboard</code></a> suite offered by RStudio. Flexdashboard enables users to easily create flexible, attractive, interactive dashboards with R. Authoring and customization of dashboards is done using R Markdown and you can optionally include Shiny components for additional interactivity. Flexdashboards allow users to:</p>
@@ -397,24 +395,22 @@ text-align: justify}
 <h3>Johns Hopkins Coronavirus Resource Centree</h3>
 <p>With a view to map the spread of the disease thus far, I have elected to use two main data sources. Firstly, to obtain the most current data on the incidence of COVID-19, I have opted to utilise the data colelcted by the <a href="https://coronavirus.jhu.edu/">Johns Hopkins Coronavirus Resource Centre</a>. The <a href="https://github.com/CSSEGISandData/COVID-19">2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE</a> is compiled from a cross section of sources daily. At the time of the preparation of this project, these included the following:</p>
 <ul>
-<li>World Health Organization (WHO): <a href="https://www.who.int/" class="uri">https://www.who.int/</a></li>
-<li>DXY.cn. Pneumonia. 2020. <a href="http://3g.dxy.cn/newh5/view/pneumonia" class="uri">http://3g.dxy.cn/newh5/view/pneumonia</a>.<br />
-</li>
-<li>BNO News: <a href="https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/" class="uri">https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/</a><br />
-</li>
-<li>National Health Commission of the People’s Republic of China (NHC): <a href="http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml" class="uri">http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml</a></li>
-<li>China CDC (CCDC): <a href="http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm" class="uri">http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm</a></li>
-<li>Hong Kong Department of Health: <a href="https://www.chp.gov.hk/en/features/102465.html" class="uri">https://www.chp.gov.hk/en/features/102465.html</a></li>
-<li>Macau Government: <a href="https://www.ssm.gov.mo/portal/" class="uri">https://www.ssm.gov.mo/portal/</a></li>
-<li>Taiwan CDC: <a href="https://sites.google.com/cdc.gov.tw/2019ncov/taiwan?authuser=0" class="uri">https://sites.google.com/cdc.gov.tw/2019ncov/taiwan?authuser=0</a></li>
-<li>US CDC: <a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html" class="uri">https://www.cdc.gov/coronavirus/2019-ncov/index.html</a></li>
-<li>Government of Canada: <a href="https://www.canada.ca/en/public-health/services/diseases/coronavirus.html" class="uri">https://www.canada.ca/en/public-health/services/diseases/coronavirus.html</a></li>
-<li>Australia Government Department of Health: <a href="https://www.health.gov.au/news/coronavirus-update-at-a-glance" class="uri">https://www.health.gov.au/news/coronavirus-update-at-a-glance</a></li>
-<li>European Centre for Disease Prevention and Control (ECDC): <a href="https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases" class="uri">https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases</a></li>
-<li>Ministry of Health Singapore (MOH): <a href="https://www.moh.gov.sg/covid-19" class="uri">https://www.moh.gov.sg/covid-19</a></li>
-<li>Italy Ministry of Health: <a href="http://www.salute.gov.it/nuovocoronavirus" class="uri">http://www.salute.gov.it/nuovocoronavirus</a></li>
-<li>1Point3Arces: <a href="https://coronavirus.1point3acres.com/en" class="uri">https://coronavirus.1point3acres.com/en</a></li>
-<li>WorldoMeters: <a href="https://www.worldometers.info/coronavirus/" class="uri">https://www.worldometers.info/coronavirus/</a></li>
+<li><a href="https://www.who.int/">World Health Organization (WHO)</a></li>
+<li><a href="http://3g.dxy.cn/newh5/view/pneumonia.">DXY.cn. Pneumonia. 2020</a></li>
+<li><a href="https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/">BNO News</a></li>
+<li><a href="http://www.nhc.gov.cn/xcs/yqtb/list_gzbd.shtml">National Health Commission of the People’s Republic of China) (NHC)</a></li>
+<li><a href="http://weekly.chinacdc.cn/news/TrackingtheEpidemic.htm">China CDC (CCDC)</a></li>
+<li><a href="https://www.chp.gov.hk/en/features/102465.html">Hong Kong Department of Health</a></li>
+<li><a href="https://www.ssm.gov.mo/portal/">Macau Government</a></li>
+<li><a href="https://sites.google.com/cdc.gov.tw/2019ncov/taiwan?authuser=0">Taiwan CDC</a></li>
+<li><a href="https://www.cdc.gov/coronavirus/2019-ncov/index.html">US CDC</a></li>
+<li><a href="https://www.canada.ca/en/public-health/services/diseases/coronavirus.html">Government of Canada</a></li>
+<li><a href="https://www.health.gov.au/news/coronavirus-update-at-a-glance">Australia Government Department of Health</a></li>
+<li><a href="https://www.ecdc.europa.eu/en/geographical-distribution-2019-ncov-cases">European Centre for Disease Prevention and Control) (ECDC)</a></li>
+<li><a href="https://www.moh.gov.sg/covid-19">Ministry of Health Singapore (MOH)</a></li>
+<li><a href="http://www.salute.gov.it/nuovocoronavirus">Italy Ministry of Health</a></li>
+<li><a href="https://coronavirus.1point3acres.com/en">1Point3Arces</a></li>
+<li><a href="https://www.worldometers.info/coronavirus/">WorldoMeters</a></li>
 </ul>
 </div>
 <div id="world-bank-development-indicators" class="section level3">
