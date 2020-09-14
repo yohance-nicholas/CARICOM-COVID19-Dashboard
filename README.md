@@ -1,4 +1,4 @@
-Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/)
+Developed and Maintained by [**Yohance Nicholas**](https://www.linkedin.com/in/yohance-nicholas/) [![Github](GitHub-Mark-32px.png)][3]
 
 Date: May 5th 2020
 
@@ -64,7 +64,7 @@ These Community Mobility Reports aim to provide insights into what has changed i
 
 [1]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V3.html
 [2]: https://yohance-nicholas.github.io/caricom_covid19_dashboard/3_caricom_covid19_flexdashboard_V4.html
-
+[3]: https://github.com/yohance-nicholas
 <style>
 body {
 text-align: justify}
