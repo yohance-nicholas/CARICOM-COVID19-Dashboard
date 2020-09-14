@@ -211,14 +211,17 @@ kable(summarise(by_oecs, mean(confirmed_per_100k), mean(mortality_rate), mean(re
 ```
 
 
-Impact of Restrictions {.storyboard}
+Impact of Restrictions {.tabset}
 =====================================
 
 The [**Google Community Mobility Reports**](https://www.google.com/covid19/mobility/) aim to provide insights into what has changed in response to policies aimed at combating COVID-19. The data allows for the tracking of movement movement trends over time by geography, across different categories of places such as retail and recreation, groceries and pharmacies, parks, transit stations, workplaces, and residential.This dataset is intended to help remediate the impact of COVID-19. 
 
+Row {.tabset .tabset-fade}
 -------------------------------------
 
-### **Residential activity** is returning to levels seen during the first phase of the lockdown
+-------------------------------------
+
+### Residential activity
 
 ```{r}
 residential_facet <-  caricom_tidycovid19 %>%
@@ -238,14 +241,7 @@ ggplotly(residential_facet) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-***
-
-- Having witnessed the second wave of the pandemic, the **worst affected countries in CARICOM have reimposed restrictions. **
-- This **trend is most evident in Trinidad and Tobago and the Bahamas** where the severity of the resurgence of the disease put no other choice in the hands of the authorities.
-- Policymakers continue to have to **weigh the benefits of reimposing restrictions with the cons brought on by further reduced economic activity**
-
-
-### **Recreational Activity** was returning to pre-pandemic levels, but this slowed following the reimposition of restrictions
+### Recreational Activity
 
 ```{r}
 recreation_facet <-  caricom_tidycovid19 %>%
@@ -264,13 +260,7 @@ ggplotly(recreation_facet) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-***
-
-- Among the worst affected countries, the **return of activity in recreational areas to levels seen before the pandemic have levelled off due to the reimposition of restrictions**
-- **Recreational activity has again contracted in Trinidad and Tobago and the Bahamas** due to the reimposition of restrictions  
-- **Haitian recreational levels have increased to levels above those seen before 2020**, in spite of the ongoing pandemic
-
-### **Workplace** activity begins to contract as countries reipose restrictions
+### Workplace activity 
 
 ```{r}
 workplaces_facet <-  caricom_tidycovid19 %>%
@@ -290,11 +280,7 @@ ggplotly(workplaces_facet) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-***
-- Having lifted the first set of restrictions, **activity at work places began to quickly rebound**
-- Given the second wave of the virus, and the need to reimpose restrictions, **countries like Trinidad and Tobago and the Bahamas have seen dramatic contractions in workplace activity**, almost reaching to levels seen durinig the first lockdown
-
-### **Public Parks** 
+### Public Parks 
 
 ```{r}
 parks_facet <-  caricom_tidycovid19 %>%
@@ -313,7 +299,7 @@ ggplotly(parks_facet) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-### **Transit Stations**
+### Transit Stations
 
 ```{r}
 parks_facet <-  caricom_tidycovid19 %>%
@@ -332,7 +318,7 @@ ggplotly(parks_facet) %>%
   layout(legend = list(orientation = "h", x = 0.1, y = -0.15))
 ```
 
-### **Groceries and Pharmacies**
+### Groceries and Pharmacies
 
 ```{r}
 parks_facet <-  caricom_tidycovid19 %>%
