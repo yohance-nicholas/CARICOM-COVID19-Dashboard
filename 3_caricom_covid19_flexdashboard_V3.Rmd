@@ -364,7 +364,7 @@ confirmed_pie
 Column {.tabset .tabset-fade}
 -------------------------------------
 
-### Per 100,000 in Commodity Based Countries
+### Per 100k in Commodity Based Countries
 
 ```{r}
 confirmed_per_100k_commodity <- caricom_tidycovid19 %>%
@@ -380,7 +380,7 @@ library(plotly)
 ggplotly(confirmed_per_100k_commodity)
 ```
 
-### Per 100,000 in Service Based Countries
+### Per 100k in Service Based Countries
 
 ```{r}
 confirmed_per_100k_service <- caricom_tidycovid19 %>%
@@ -405,7 +405,7 @@ confirmed_per_100k_oecs <- caricom_tidycovid19 %>%
   ggplot(aes(x = date, y = confirmed_per_100k, col = country)) +
   geom_line() +
   labs(x = "Date",
-       y = "Confirmed Cases per 100,000 Persons",
+       y = "Confirmed Cases per 100k Persons",
        caption = "Source: 2019 Novel Coronavirus COVID-19 (2019-nCoV) Data Repository by Johns Hopkins CSSE
        Prepared by: Yohance Nicholas")
 library(plotly)
